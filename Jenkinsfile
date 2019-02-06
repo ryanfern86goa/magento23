@@ -8,6 +8,8 @@ node {
         }
         stage ('Build') {
             sh "echo 'shell scripts to build project...'"
+            sh "composer install --ignore-platform-reqs --no-interaction"
+            sh "php bin/magento setup:di:compile"
             zip zipFile: 'artifact.zip', archive: false, dir: './'
             archiveArtifacts artifacts: 'artifact.zip'
             sshPublisher(publishers: [sshPublisherDesc(configName: 'ec2-jenkins', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'mkdir releases & mkdir releases/${BUILD_NUMBER} & unzip artifact.zip -d releases/${BUILD_NUMBER}', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/ubuntu', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'artifact.zip')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
