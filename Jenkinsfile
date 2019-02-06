@@ -1,7 +1,7 @@
 node {
     // Clean workspace before doing anything
     deleteDir()
-    ARTIFACT_ZIP_PATH = sh '${BUILD_NUMBER}.zip'
+    def ARTIFACT_ZIP_PATH = sh 'echo ${BUILD_NUMBER}.zip'
     try {
         stage ('Clone') {
             checkout scm
