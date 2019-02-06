@@ -8,7 +8,7 @@ node {
         }
         stage ('Build') {
             sh "echo 'shell scripts to build project...'"
-            zip zipFile: $ARTIFACT_ZIP_PATH, archive: false, dir: './'
+            zip zipFile: '$ARTIFACT_ZIP_PATH', archive: false, dir: './'
             archiveArtifacts artifacts: '${BUILD_NUMBER}.zip'
             sshPublisher(publishers: [sshPublisherDesc(configName: 'ec2-jenkins', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/ubuntu', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '${BUILD_NUMBER}.zip')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             sh "scp -o StrictHostKeyChecking=no $WORKSPACE/auth.json ubuntu@ec2-18-191-172-33.us-east-2.compute.amazonaws.com:/home/ubuntu/"
