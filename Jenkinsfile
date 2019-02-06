@@ -8,6 +8,7 @@ node {
         }
         stage ('Build') {
             sh "echo 'shell scripts to build project...'"
+            archiveArtifacts $WORKSPACE
             sh "scp -o StrictHostKeyChecking=no $WORKSPACE/auth.json ubuntu@ec2-18-191-172-33.us-east-2.compute.amazonaws.com:/home/ubuntu/"
         }
         stage ('Tests') {
