@@ -50,6 +50,8 @@ node ('master'){
             when{
               branch 'develop'
             }
+            checkout scm
+        }    
         stage ('Build') {
             when{
               branch 'develop'
