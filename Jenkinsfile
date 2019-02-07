@@ -7,7 +7,9 @@ node ('master'){
             when{
               branch 'master'
             }
-            checkout scm
+            steps {
+                checkout scm
+            }
         }
         stage ('Build') {
             when{
@@ -19,21 +21,28 @@ node ('master'){
             when{
               branch 'master'
             }
-            parallel 'static': {
-                sh "echo 'master shell scripts to run static tests...'"
-            },
-            'unit': {
-                sh "echo 'master shell scripts to run unit tests...'"
-            },
-            'integration': {
-                sh "echo 'master shell scripts to run integration tests...'"
+            steps {
+                parallel {
+                    'static': {
+                        sh "echo 'master shell scripts to run static tests...'"
+                    },
+                    'unit': {
+                        sh "echo 'master shell scripts to run unit tests...'"
+                    },
+                    'integration': {
+                        sh "echo 'master shell scripts to run integration tests...'"
+                    }
+                } 
             }
+            
         }
         stage ('Deploy') {
             when{
               branch 'master'
             }
-            sh "echo 'master shell scripts to deploy to server...'"
+            steps {
+                sh "echo 'master shell scripts to deploy to server...'"
+            }
         }
     } catch (err) {
         currentBuild.result = 'master FAILED'
@@ -50,36 +59,45 @@ node ('master'){
             when{
               branch 'develop'
             }
-            checkout scm
-        }    
+            steps {
+                checkout scm
+            }
+        }
         stage ('Build') {
             when{
               branch 'develop'
             }
-            sh "echo 'dev shell scripts to build project...'"
+            sh "echo 'develop shell scripts to build project...'"
         }
         stage ('Tests') {
             when{
               branch 'develop'
             }
-            parallel 'static': {
-                sh "echo 'dev shell scripts to run static tests...'"
-            },
-            'unit': {
-                sh "echo 'dev shell scripts to run unit tests...'"
-            },
-            'integration': {
-                sh "echo 'dev shell scripts to run integration tests...'"
+            steps {
+                parallel {
+                    'static': {
+                        sh "echo 'develop shell scripts to run static tests...'"
+                    },
+                    'unit': {
+                        sh "echo 'develop shell scripts to run unit tests...'"
+                    },
+                    'integration': {
+                        sh "echo 'develop shell scripts to run integration tests...'"
+                    }
+                } 
             }
+            
         }
         stage ('Deploy') {
             when{
               branch 'develop'
             }
-            sh "echo 'dev shell scripts to deploy to server...'"
+            steps {
+                sh "echo 'develop shell scripts to deploy to server...'"
+            }
         }
     } catch (err) {
-        currentBuild.result = 'dev FAILED'
+        currentBuild.result = 'develop FAILED'
         throw err
     }
 }
