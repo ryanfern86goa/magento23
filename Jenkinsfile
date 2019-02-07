@@ -16,7 +16,9 @@ pipeline {
             when{
               branch 'master'
             }
-            sh "echo 'master shell scripts to build project...'"
+            steps {
+                sh "echo 'master shell scripts to build project...'"
+            }
         }
         stage ('Tests') {
             when{
@@ -65,7 +67,9 @@ pipeline {
             when{
               branch 'develop'
             }
-            sh "echo 'develop shell scripts to build project...'"
+            steps {
+                sh "echo 'master shell scripts to build project...'"
+            }
         }
         stage ('Tests') {
             when{
