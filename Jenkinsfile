@@ -29,7 +29,7 @@ node ('master'){
     }
 }
 
-node ('test5pipelinedevelopment'){
+node ('master'){
     // Clean workspace before doing anything
     deleteDir()
 
