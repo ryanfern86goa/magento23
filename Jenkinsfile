@@ -22,16 +22,14 @@ node ('master'){
               branch 'master'
             }
             steps {
-                parallel {
-                    'static' {
-                        sh "echo 'master shell scripts to run static tests...'"
-                    },
-                    'unit' {
-                        sh "echo 'master shell scripts to run unit tests...'"
-                    },
-                    'integration' {
-                        sh "echo 'master shell scripts to run integration tests...'"
-                    }
+                parallel 'static': {
+                sh "echo 'shell scripts to run static tests...'"
+                },
+                'unit': {
+                    sh "echo 'shell scripts to run unit tests...'"
+                },
+                'integration': {
+                    sh "echo 'shell scripts to run integration tests...'"
                 }
             }
             
@@ -74,17 +72,15 @@ node ('master'){
               branch 'develop'
             }
             steps {
-                parallel {
-                    'static' {
-                        sh "echo 'develop shell scripts to run static tests...'"
-                    },
-                    'unit' {
-                        sh "echo 'develop shell scripts to run unit tests...'"
-                    },
-                    'integration' {
-                        sh "echo 'develop shell scripts to run integration tests...'"
-                    }
-                } 
+                parallel 'static': {
+                sh "echo 'shell scripts to run static tests...'"
+                },
+                'unit': {
+                    sh "echo 'shell scripts to run unit tests...'"
+                },
+                'integration': {
+                    sh "echo 'shell scripts to run integration tests...'"
+                }
             }
             
         }
