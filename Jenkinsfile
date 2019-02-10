@@ -3,7 +3,7 @@ pipeline {
     // Clean workspace before doing anything
 
     stages {
-        stage ('Clone') {
+        stage ('Clone master') {
             when{
               branch 'master'
             }
@@ -12,7 +12,18 @@ pipeline {
                 checkout scm
             }
         }
-        stage ('Build') {
+        
+        stage ('Clone develop') {
+            when{
+              branch 'develop'
+            }
+            steps {
+                deleteDir()
+                checkout scm
+            }
+        }
+        
+        stage ('Build master') {
             when{
               branch 'master'
             }
@@ -20,6 +31,16 @@ pipeline {
                 sh "echo 'master shell scripts to build project...'"
             }
         }
+        
+        stage ('Build develop') {
+            when{
+              branch 'develop'
+            }
+            steps {
+                sh "echo 'master shell scripts to build project...'"
+            }
+        }
+        
         stage ('Tests') {
             when{
               branch 'master'
