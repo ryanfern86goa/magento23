@@ -37,7 +37,11 @@ pipeline {
               branch 'develop'
             }
             steps {
-                sh "echo 'master shell scripts to build project...'"
+                sh "echo 'develop shell scripts to build project...'"
+                sh "echo 'running artifact build'"
+                zip zipFile: 'artifact.zip', archive: false, dir: './'
+                sh "echo 'archiving artifact'"
+                archiveArtifacts artifacts: 'artifact.zip'
             }
         }
         
